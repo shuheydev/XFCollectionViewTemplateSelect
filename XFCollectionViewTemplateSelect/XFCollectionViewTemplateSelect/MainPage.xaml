@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="XFCollectionViewTemplateSelect.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:local="clr-namespace:XFCollectionViewTemplateSelect"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="Root"
+    mc:Ignorable="d">
+
+    <ContentPage.Resources>
+        <DataTemplate x:Key="FirstPageTemplate">
+            <Grid HeightRequest="{Binding Source={x:Reference Root}, Path=BindingContext.DisplayHeight}" WidthRequest="{Binding Source={x:Reference Root}, Path=BindingContext.DisplayWidth}">
+                <Image Aspect="AspectFill" Source="myIcon" />
+                <Label Text="{Binding DisplayHeight}" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="SecondPageTemplate">
+            <StackLayout HeightRequest="{Binding Source={x:Reference Root}, Path=BindingContext.DisplayHeight}" WidthRequest="{Binding Source={x:Reference Root}, Path=BindingContext.DisplayWidth}">
+                <Label Text="SecondPage" />
+                <ListView HeightRequest="400" ItemsSource="{Binding Source={x:Reference Root}, Path=BindingContext.People}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Label Text="{Binding FirstName}" />
+                                    <Label Text="{Binding LastName}" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </DataTemplate>
+        <local:CarouselDataTemplateSelector
+            x:Key="CarouselDataTemplateSelector"
+            FirstPageTemplate="{StaticResource FirstPageTemplate}"
+            SecondPageTemplate="{StaticResource SecondPageTemplate}" />
+    </ContentPage.Resources>
+
+
+    <!--<StackLayout>
+        <Label Text="hello" />
+    </StackLayout>-->
+    <CarouselView ItemTemplate="{StaticResource CarouselDataTemplateSelector}" ItemsSource="{Binding PageIndice}" />
+
+    <!--<CollectionView ItemTemplate="{StaticResource CarouselDataTemplateSelector}" ItemsSource="{Binding PageIndice}">
+
+        <CollectionView.ItemsLayout>
+            <LinearItemsLayout
+                ItemSpacing="0"
+                Orientation="Horizontal"
+                SnapPointsAlignment="Center"
+                SnapPointsType="MandatorySingle" />
+
+        </CollectionView.ItemsLayout>
+
+    </CollectionView>-->
+
+</ContentPage>
